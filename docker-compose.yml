@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  arduino-server:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      # Monta la carpeta keys en tiempo de ejecución (no se guarda en imagen)
+      - ./keys:/app/keys:ro
+    restart: unless-stopped

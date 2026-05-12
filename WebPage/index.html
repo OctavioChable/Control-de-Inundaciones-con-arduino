@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Control de Inundaciones</title>
+    <!-- Librerías Externas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1><i class="fa-solid fa-house-flood-water" style="color: #2563eb;"></i>  Control de Inundaciones</h1>
+        <p>ESP32 Nano y Sensor Ultrasonico HC SR04 - IoT</p>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Gráfica de Historial -->
+        <div class="card main-chart">
+            <h2><i class="fa-solid fa-chart-simple" style="color:#2563eb;"></i> Historial de Nivel (cm)</h2>
+            <div class="chart-container">
+                <canvas id="floodChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Panel Lateral de Estadísticas -->
+        <div class="stats-panel">
+            <div class="card stat-box">
+                <h2 style="font-size: 20px; font-weight: bold;"><i class="fa-solid fa-water" style="color: #2563eb;"></i> Nivel Actual</h2>
+                <div class="distance-display" id="distText">--</div>
+                <div class="unit">Centímetros</div>
+            </div>
+
+            <div class="card indicators-grid">
+                <div class="bar-wrapper">
+                    <h2> <i class="fa-solid fa-droplet" style="color: rgb(34, 158, 253);"></i> Nivel de Agua</h2>
+                    <div class="bar-container">
+                        <div id="waterBar" class="bar-fill water-fill" style="height: 0%;"></div>
+                    </div>
+                </div>
+                <div class="bar-wrapper">
+                    <h2><i class="fa-solid fa-triangle-exclamation" style="color: rgb(255, 176, 59);"></i> Riesgo</h2>
+                    <div class="bar-container">
+                        <div id="dangerBar" class="bar-fill danger-fill" style="height: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+    </div>
+
+    <div class ="cardMensaje">
+        <h2><i class="fa-solid fa-circle-info" style="color:#2563eb;"></i> Información</h2>
+        <p id = "mensajesText" style="font-weight: bold;">Aqui se mostrará información relevante</p>
+        <p id="resumenComportamiento" style="color: #64748b;">Asi se comporta</p>
+        <button id="btnExportar" class="glass-button">
+           <i class="fa-solid fa-chart-simple" style="color: white;"></i>  Exportar Historial PDF
+        </button>
+    </div>
+
+    <!-- 1. Cargar Firebase Primero -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
