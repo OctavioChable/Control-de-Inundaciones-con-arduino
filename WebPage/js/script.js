@@ -1,5 +1,5 @@
 let limiteActual = 0; 
-const SERVER_URL = "http://localhost:3000"; 
+const SERVER_URL = window.location.origin; 
 const suelocm = 7; 
 
 // Configuración de la Gráfica 
