@@ -2,15 +2,17 @@ let limiteActual = 0;
 const SERVER_URL = window.location.origin; 
 const suelocm = 7; 
 
+
 // Configuración de la Gráfica 
 const ctx = document.getElementById('floodChart').getContext('2d');
+const sonidoAlert = new Audio("alarm.MP3"); 
 
 const floodChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: [], 
         datasets: [{
-            label: 'Nivel (cm)',
+            label: 'Nivel del agua',
             data: [],
             borderColor: '#1155ea',
             backgroundColor: 'rgba(37, 100, 235, 0.3)',
@@ -18,8 +20,42 @@ const floodChart = new Chart(ctx, {
             tension: 0.5
         }]
     },
-    options: { responsive: true, maintainAspectRatio: false }
+    options: { 
+        responsive: true, 
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                usePointStyle: true, 
+                pointStyle: 'circle',
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                display: true,
+                text: 'Tiempo (hh:mm:ss)'
+                }
+            },
+            y: {
+                title: {
+                display: true,
+                text: 'Nivel del agua (cm)'
+                }
+            }
+        }
+    }
 });
+
+function reproducirAlerta(){
+    sonidoAlert.loop = true;
+    sonidoAlert.play()
+}
+
+function pararAlerta(){
+    sonidoAlert.pause();
+}
 
 // FUNCIÓN PRINCIPAL DE CONSULTA (Polling)
 async function actualizarDashboard() {
@@ -59,30 +95,55 @@ async function actualizarDashboard() {
 }
 
 function analizarComportamiento(values) {
-    if (values.length < 2) return "Esperando más datos...";
-
-    const primero = promedio(values.slice(0, Math.floor(values.length/2)));
-    const ultimo = promedio(values.slice(Math.floor(values.length/2)));
-    const diferencia = primero - ultimo;
-    const desviacion = desviacionEstandar(values);
-
-    let resumen = "";
-
-    if (desviacion > 2) {
-        resumen = "Comportamiento inestable: fluctuaciones fuertes en el nivel de agua.";
-    } else if (Math.abs(diferencia) <= 1) {
-        resumen = "Estado estable: sin cambios significativos.";
-    } else if (diferencia < 0) {
-        resumen = `Tendencia al alza: el nivel subió ~${Math.abs(diferencia).toFixed(2)} cm.`;
-    } else {
-        resumen = `Tendencia a la baja: el nivel bajó ~${Math.abs(diferencia).toFixed(2)} cm.`;
-    }
+    let resumen = analizarLecturas(values);
 
     const resumenElement = document.getElementById('resumenComportamiento');
     if (resumenElement) resumenElement.innerText = resumen;
 
     return resumen;
 }
+
+
+function analizarLecturas(valores) {
+    if (valores.length < 2) return "Esperando más datos...";
+
+    // 1. Calcular promedio
+    const promedio = valores.reduce((acc, v) => acc + v, 0) / valores.length;
+
+    // 2. Calcular desviación estándar
+    const varianza = valores.reduce((acc, v) => acc + Math.pow(v - promedio, 2), 0) / valores.length;
+    const desviacion = Math.sqrt(varianza);
+
+    // 3. Calcular diferencia global (último - primero)
+    const diferencia = valores[valores.length - 1] - valores[0];
+
+    // 4. Calcular tendencia lineal aproximada (regresión simple)
+    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+    for (let i = 0; i < valores.length; i++) {
+        sumX += i;
+        sumY += valores[i];
+        sumXY += i * valores[i];
+        sumX2 += i * i;
+    }
+    const pendiente = (valores.length * sumXY - sumX * sumY) / (valores.length * sumX2 - sumX * sumX);
+
+    // 5. Interpretación combinada
+    let resumen = "";
+    if (desviacion > 2) {
+        resumen = "Comportamiento inestable: fluctuaciones fuertes en las lecturas.";
+    } else if (desviacion <= 0.5) {
+        resumen = "Estado estable: lecturas muy consistentes.";
+    } else if (pendiente > 0.5) {
+        resumen = `Tendencia al alza: el nivel subió en promedio ~${pendiente.toFixed(2)} cm por lectura.`;
+    } else if (pendiente < -0.5) {
+        resumen = `Tendencia a la baja: el nivel bajó en promedio ~${Math.abs(pendiente).toFixed(2)} cm por lectura.`;
+    } else {
+        resumen = "Variación leve detectada: cambios moderados sin tendencia clara.";
+    }
+
+    return resumen;
+}
+
 
 
 function promedio(arr) {
@@ -131,12 +192,15 @@ function actualizarUI(realValue) {
         if (DangerLevel < 45){
             dangerBar.style.background = "linear-gradient(to top, #14e29d, #1fbf84)";
             mensajes = "El nivel del agua es bajo, no requiere acciones.";
+            pararAlerta();
         } else if (DangerLevel < 80) {
             dangerBar.style.background = "linear-gradient(to top, #facb53, #fcaa4d)";
             mensajes = "El nivel del agua está subiendo, manténgase atento.";
+            pararAlerta();
         } else {
             dangerBar.style.background = "linear-gradient(to top, #e65858, #c91c1c)";
             mensajes = "El nivel del agua es peligroso, evacue de inmediato.";
+            reproducirAlerta();
         }
 
         const mensajesP = document.getElementById('mensajesText');
@@ -157,13 +221,13 @@ async function exportarReportePDF() {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor(17, 85, 234); 
-    doc.text("REPORTE DE MONITOREO - IoT ESP32 - HC SR04", 20, 20);
+    doc.text("REPORTE DE MONITOREO - IoT ESP32 - HC SR04", doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
     
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Fecha de emisión: ${new Date().toLocaleString()}`, 20, 30);
-    doc.text("Base de Datos: Firebase", 20, 37);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Fecha y hora de emisión: ${new Date().toLocaleString()}`, doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
+    doc.text("Base de Datos: Firebase", doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
     
     const response = await fetch(`${SERVER_URL}/api/reporte`);
     const data = await response.json();
@@ -179,8 +243,8 @@ async function exportarReportePDF() {
             const lectura = data[key];
             const hora = new Date(lectura.timestamp).toLocaleTimeString();
             let nivelAguaExpo = suelocm - lectura.valor;
-            doc.text(hora, 25, yPos);
-            doc.text(`${nivelAguaExpo} cm`, 85, yPos);
+            doc.text(hora, 35, yPos);
+            doc.text(`${nivelAguaExpo} cm`, 90, yPos);
             
             yPos += 8; // Espaciado entre filas
 
@@ -190,6 +254,22 @@ async function exportarReportePDF() {
                 yPos = 20;
             }
         });
+
+        const pageCount = doc.internal.getNumberOfPages();
+
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+
+            // Texto centrado abajo
+            doc.text(
+            `Página ${i} de ${pageCount}`,
+            doc.internal.pageSize.getWidth() / 2,
+            doc.internal.pageSize.getHeight() - 10,
+            { align: "center" }
+            );
+        }
 
         // Guardar el archivo
         doc.save(`Reporte_${Date.now()}.pdf`);

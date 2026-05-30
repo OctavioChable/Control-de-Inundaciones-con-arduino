@@ -22,7 +22,6 @@
 
         .header {
             background-color: white;
-        
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 24px;
             padding: 25px;
@@ -30,6 +29,27 @@
             width: 100%;
             max-width: 1100px;
             margin-bottom: 30px;
+
+            /* ---> NUEVAS PROPIEDADES PARA ALINEAR <--- */
+            display: flex;
+            align-items: center;
+            gap: 20px;           
+        }
+
+        
+        .logo-container img {
+            height: auto;
+            max-width: 120px; 
+            display: block;
+        }
+
+        
+        .header-text h1 {
+            margin: 0 0 5px 0; 
+        }
+
+        .header-text p {
+            margin: 0;
         }
 
 
