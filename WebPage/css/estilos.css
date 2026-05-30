@@ -201,6 +201,7 @@
         }
 
         .alerta {
+            background-color: red;
             animation: parpadeoBorde 1s infinite alternate;
         }
 

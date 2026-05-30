@@ -69,6 +69,7 @@ function pararBordeAlerta(Elemento){
 function activarAlerta(){
     reproducirAlarma();
     const Cont1 = document.getElementById("contenedor1");
+    Cont1.classList.add("alert");
     const Cont2 = document.getElementById("contenedor1");
     const Cont3 = document.getElementById("contenedor1");
     const Cont4 = document.getElementById("contenedor1");
