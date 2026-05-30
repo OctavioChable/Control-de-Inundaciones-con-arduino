@@ -59,21 +59,20 @@ function pararAlarma(){
 }
 
 function BordeAlerta(Elemento){
-    Elemento.classList.add("alert"); 
+    Elemento.classList.add("alerta"); 
 }
 
 function pararBordeAlerta(Elemento){
-    Elemento.classList.remove("alert");
+    Elemento.classList.remove("alerta");
 }
 
 function activarAlerta(){
     reproducirAlarma();
     const Cont1 = document.getElementById("contenedor1");
-    Cont1.classList.add("alert");
-    const Cont2 = document.getElementById("contenedor1");
-    const Cont3 = document.getElementById("contenedor1");
-    const Cont4 = document.getElementById("contenedor1");
-    const Cont5 = document.getElementById("contenedor1");
+    const Cont2 = document.getElementById("contenedor2");
+    const Cont3 = document.getElementById("contenedor3");
+    const Cont4 = document.getElementById("contenedor4");
+    const Cont5 = document.getElementById("contenedor5");
 
     BordeAlerta(Cont1);
     BordeAlerta(Cont2);
@@ -85,10 +84,10 @@ function activarAlerta(){
 function pararAlerta(){
     pararAlarma();
     const Cont1 = document.getElementById("contenedor1");
-    const Cont2 = document.getElementById("contenedor1");
-    const Cont3 = document.getElementById("contenedor1");
-    const Cont4 = document.getElementById("contenedor1");
-    const Cont5 = document.getElementById("contenedor1");
+    const Cont2 = document.getElementById("contenedor2");
+    const Cont3 = document.getElementById("contenedor3");
+    const Cont4 = document.getElementById("contenedor4");
+    const Cont5 = document.getElementById("contenedor5");
 
     pararBordeAlerta(Cont1);
     pararBordeAlerta(Cont2);
