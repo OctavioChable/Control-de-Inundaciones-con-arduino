@@ -200,20 +200,28 @@
             .main-chart { height: 350px; }
         }
 
-        /* --- ESTILOS DE ALERTA-- */
-        .alerta {
-            animation: parpadeoBorde 1s infinite alternate !important;
-            border: 2px solid #ef4444 !important;
-        }
+/* ========================================================
+   SISTEMA DE ALERTA DE INUNDACIÓN (CORREGIDO Y OPTIMIZADO)
+   ======================================================== */
 
-        /* Animación: de un rojo suave y sutil a un rojo intenso con brillo */
-        @keyframes parpadeoBorde {
-            from {
-                border-color: #f87171;
-                box-shadow: 0 0 10px rgba(248, 113, 113, 0.4);
-            }
-            to {
-                border-color: #ef4444;
-                box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
-            }
-        }
+.alerta {
+    animation: parpadeoIntenso 1s infinite alternate !important;
+    border: 3px solid #ef4444 !important; /* Borde más grueso e impositivo */
+    position: relative;
+    z-index: 10; /* Lo posiciona por encima de cualquier otro elemento */
+}
+
+@keyframes parpadeoIntenso {
+    from {
+        border-color: #f87171 !important;
+        /* Un fondo rojo sutil traslúcido para que parpadee toda la tarjeta */
+        background-color: rgba(239, 68, 68, 0.15) !important;
+        box-shadow: 0 0 15px rgba(248, 113, 113, 0.6) !important;
+    }
+    to {
+        border-color: #b91c1c !important;
+        /* Rojo más intenso en el fondo */
+        background-color: rgba(239, 68, 68, 0.35) !important;
+        box-shadow: 0 0 30px rgba(185, 28, 28, 0.9) !important;
+    }
+}
