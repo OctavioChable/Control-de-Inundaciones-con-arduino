@@ -1,6 +1,6 @@
 let limiteActual = 0; 
 const SERVER_URL = window.location.origin; 
-const suelocm = 7; 
+const suelocm = 6; 
 
 
 // Configuración de la Gráfica 
