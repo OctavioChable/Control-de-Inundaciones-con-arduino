@@ -324,7 +324,7 @@ async function exportarReportePDF() {
     if (data) {
         let yPos = 70;
         doc.setFont("helvetica", "bold");
-        doc.text("Hora de Lectura", 25, 65);
+        doc.text("Fecha de Lectura", 25, 65);
         doc.text("Nivel Detectado (cm)", 80, 65);
         doc.setFont("helvetica", "normal");
 
@@ -348,7 +348,7 @@ async function exportarReportePDF() {
             const fechaCompleta = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
 
             let nivelAguaExpo = suelocm - lectura.valor;
-            doc.text(fechaCompleta, 35, yPos);
+            doc.text(fechaCompleta, 25, yPos);
             doc.text(`${nivelAguaExpo} cm`, 90, yPos);
             
             yPos += 8; // Espaciado entre filas

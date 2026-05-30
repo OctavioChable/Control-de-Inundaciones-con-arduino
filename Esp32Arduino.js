@@ -92,10 +92,10 @@ app.get('/api/dashboard', async (req, res) => {
     }
 });
 
-// Endpoint para el PDF (últimos 30)
+// Endpoint para el PDF (últimos 50)
 app.get('/api/reporte', async (req, res) => {
     try {
-        const snapshot = await db.ref('/sensor/historial').limitToLast(30).once('value');
+        const snapshot = await db.ref('/sensor/historial').limitToLast(50).once('value');
         res.status(200).json(snapshot.val());
     } catch (error) {
         res.status(500).json({ error: "Error en reporte" });
