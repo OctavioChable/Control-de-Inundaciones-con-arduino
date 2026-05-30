@@ -223,7 +223,7 @@
     pointer-events: none; /* No interfiere con clics o botones */
     
     /* Configuración inicial del borde neón */
-    border: 3px solid #ef4444;
+    border: 1px solid #eebbbb;
     
     /* Animación del pulso de luz */
     animation: pulsoNeon 0.5s infinite alternate ease-in-out;
@@ -232,7 +232,7 @@
 
 @keyframes pulsoNeon {
     0% {
-        border-color: #f87171;
+        border-color: #fbebeb;
         /* Fondo rojo muy suave que respira */
         background-color: rgba(239, 68, 68, 0.08);
         /* Brillo sutil */
