@@ -139,10 +139,25 @@ async function actualizarDashboard() {
 
             historial.forEach(lectura => {
                 const fecha = new Date(lectura.timestamp);
-                const hora = `${fecha.getHours()}:${String(fecha.getMinutes()).padStart(2, '0')}:${String(fecha.getSeconds()).padStart(2, '0')}`;
+                
+                // 1. Extraemos los componentes de la fecha completa
+                const dia = String(fecha.getDate()).padStart(2, '0');
+                
+                const mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
+                const anio = fecha.getFullYear();
+                
+                // 2. Extraemos los componentes de la hora 
+                const horas = String(fecha.getHours()).padStart(2, '0');
+                const minutos = String(fecha.getMinutes()).padStart(2, '0');
+                const segundos = String(fecha.getSeconds()).padStart(2, '0');
+                
+                // 3. Unimos todo en una sola cadena de texto (Fecha + Hora)
+                const fechaCompleta = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
                 
                 let waterLevel = SueloSensor1 - lectura.valor; 
-                labels.push(hora);
+                
+                // 4. Empujamos la fecha completa como la etiqueta del gráfico
+                labels.push(fechaCompleta);
                 values.push(waterLevel);
             });
 
