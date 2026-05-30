@@ -12,12 +12,12 @@
 </head>
 <body>
 
-    <div class="header">
+    <div id="contenedor1" class="header">
         <div class="logo-container">
             <img src="IconFlood.svg" alt="FloodESP Logo">
         </div>
         
-        <div class="header-text">
+        <div  class="header-text">
             <h1>
                 Control de Inundaciones
             </h1>
@@ -25,9 +25,9 @@
         </div>
     </div>
 
-    <div class="dashboard-container">
+    <div  class="dashboard-container">
         <!-- Gráfica de Historial -->
-        <div class="card main-chart">
+        <div id="contenedor2" class="card main-chart">
             <h2><i class="fa-solid fa-chart-simple" style="color:#2563eb;"></i> Historial de Nivel (cm)</h2>
             <div class="chart-container">
                 <canvas id="floodChart"></canvas>
@@ -36,13 +36,13 @@
 
         <!-- Panel Lateral de Estadísticas -->
         <div class="stats-panel">
-            <div class="card stat-box">
+            <div id="contenedor3" class="card stat-box">
                 <h2 style="font-size: 20px; font-weight: bold;"><i class="fa-solid fa-water" style="color: #2563eb;"></i> Nivel Actual</h2>
                 <div class="distance-display" id="distText">--</div>
                 <div class="unit">Centímetros</div>
             </div>
 
-            <div class="card indicators-grid">
+            <div id="contenedor4" class="card indicators-grid">
                 <div class="bar-wrapper">
                     <h2> <i class="fa-solid fa-droplet" style="color: rgb(34, 158, 253);"></i> Nivel de Agua</h2>
                     <div class="bar-container">
@@ -62,7 +62,7 @@
 
     </div>
 
-    <div class ="cardMensaje">
+    <div id="contenedor5" class ="cardMensaje">
         <h2><i class="fa-solid fa-circle-info" style="color:#2563eb;"></i> Información</h2>
         <p id = "mensajesText" style="font-weight: bold;">Aqui se mostrará información relevante</p>
         <p id="resumenComportamiento" style="color: #64748b;">Asi se comporta</p>

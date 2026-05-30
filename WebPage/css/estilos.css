@@ -199,3 +199,17 @@
             .dashboard-container { grid-template-columns: 1fr; }
             .main-chart { height: 350px; }
         }
+
+        .alerta {
+            animation: parpadeoBorde 1s infinite alternate;
+        }
+
+        /* Animación: de rojo claro a rojo intenso */
+        @keyframes parpadeoBorde {
+        from {
+            border-color: #f87171; /* rojo claro */
+        }
+        to {
+            border-color: #ef4444; /* rojo intenso */
+        }
+        }

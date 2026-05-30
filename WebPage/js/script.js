@@ -7,6 +7,7 @@ const suelocm = 7;
 const ctx = document.getElementById('floodChart').getContext('2d');
 const sonidoAlert = new Audio("alarm.MP3"); 
 
+
 const floodChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -48,13 +49,51 @@ const floodChart = new Chart(ctx, {
     }
 });
 
-function reproducirAlerta(){
+function reproducirAlarma(){
     sonidoAlert.loop = true;
     sonidoAlert.play()
 }
 
-function pararAlerta(){
+function pararAlarma(){
     sonidoAlert.pause();
+}
+
+function BordeAlerta(Elemento){
+    Elemento.classList.add("alert"); 
+}
+
+function pararBordeAlerta(Elemento){
+    Elemento.classList.remove("alert");
+}
+
+function activarAlerta(){
+    reproducirAlarma();
+    const Cont1 = document.getElementById("contenedor1");
+    const Cont2 = document.getElementById("contenedor1");
+    const Cont3 = document.getElementById("contenedor1");
+    const Cont4 = document.getElementById("contenedor1");
+    const Cont5 = document.getElementById("contenedor1");
+
+    BordeAlerta(Cont1);
+    BordeAlerta(Cont2);
+    BordeAlerta(Cont3);
+    BordeAlerta(Cont4);
+    BordeAlerta(Cont5);
+}
+
+function pararAlerta(){
+    pararAlarma();
+    const Cont1 = document.getElementById("contenedor1");
+    const Cont2 = document.getElementById("contenedor1");
+    const Cont3 = document.getElementById("contenedor1");
+    const Cont4 = document.getElementById("contenedor1");
+    const Cont5 = document.getElementById("contenedor1");
+
+    pararBordeAlerta(Cont1);
+    pararBordeAlerta(Cont2);
+    pararBordeAlerta(Cont3);
+    pararBordeAlerta(Cont4);
+    pararBordeAlerta(Cont5);
 }
 
 // FUNCIÓN PRINCIPAL DE CONSULTA (Polling)
@@ -200,7 +239,7 @@ function actualizarUI(realValue) {
         } else {
             dangerBar.style.background = "linear-gradient(to top, #e65858, #c91c1c)";
             mensajes = "El nivel del agua es peligroso, evacue de inmediato.";
-            reproducirAlerta();
+            activarAlerta();
         }
 
         const mensajesP = document.getElementById('mensajesText');
@@ -221,13 +260,13 @@ async function exportarReportePDF() {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor(17, 85, 234); 
-    doc.text("REPORTE DE MONITOREO - IoT ESP32 - HC SR04", doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
+    doc.text("REPORTE DE MONITOREO - IoT ESP32 - HC SR04", doc.internal.pageSize.getWidth() / 2, 25, { align: "center" });
     
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0);
     doc.setFont("helvetica", "bold");
-    doc.text(`Fecha y hora de emisión: ${new Date().toLocaleString()}`, doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
-    doc.text("Base de Datos: Firebase", doc.internal.pageSize.getWidth() / 2, 30, { align: "center" });
+    doc.text(`Fecha y hora de emisión: ${new Date().toLocaleString()}`, doc.internal.pageSize.getWidth() / 2, 40, { align: "center" });
+    doc.text("Base de Datos: Firebase", doc.internal.pageSize.getWidth() / 2, 50, { align: "center" });
     
     const response = await fetch(`${SERVER_URL}/api/reporte`);
     const data = await response.json();
