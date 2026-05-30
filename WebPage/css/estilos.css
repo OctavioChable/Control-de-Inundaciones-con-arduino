@@ -204,24 +204,39 @@
    SISTEMA DE ALERTA DE INUNDACIÓN (CORREGIDO Y OPTIMIZADO)
    ======================================================== */
 
+/* ========================================================
+   SISTEMA DE ALERTA DE INUNDACIÓN (VERSIÓN AL ALTA INTENSIDAD)
+   ======================================================== */
+
 .alerta {
-    animation: parpadeoIntenso 1s infinite alternate !important;
-    border: 3px solid #ef4444 !important; /* Borde más grueso e impositivo */
+    /* Forzamos al navegador a usar la tarjeta en una capa gráfica flotante */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    
+    /* Usamos outline en lugar de border para evitar el bloqueo del degradado */
+    outline: 4px solid #ef4444 !important;
+    outline-offset: -4px; /* Hace que el contorno se dibuje perfectamente alineado dentro de la tarjeta */
+    
+    animation: parpadeoHiperrealista 1.2s infinite alternate ease-in-out !important;
     position: relative;
-    z-index: 10; /* Lo posiciona por encima de cualquier otro elemento */
+    z-index: 999 !important; /* Asegura que la sombra se proyecte por encima del fondo del body */
 }
 
-@keyframes parpadeoIntenso {
-    from {
-        border-color: #f87171 !important;
-        /* Un fondo rojo sutil traslúcido para que parpadee toda la tarjeta */
+@keyframes parpadeoHiperrealista {
+    0% {
+        outline-color: #f87171 !important;
         background-color: rgba(239, 68, 68, 0.15) !important;
-        box-shadow: 0 0 15px rgba(248, 113, 113, 0.6) !important;
+        /* Efecto de luz neón expandido (múltiples capas de sombra para que se note sí o sí) */
+        box-shadow: 0 0 15px rgba(248, 113, 113, 0.6), 
+                    inset 0 0 10px rgba(248, 113, 113, 0.3) !important;
     }
-    to {
-        border-color: #b91c1c !important;
-        /* Rojo más intenso en el fondo */
-        background-color: rgba(239, 68, 68, 0.35) !important;
-        box-shadow: 0 0 30px rgba(185, 28, 28, 0.9) !important;
+    100% {
+        outline-color: #b91c1c !important;
+        background-color: rgba(239, 68, 68, 0.45) !important;
+        /* Luz de emergencia al máximo esplendor */
+        box-shadow: 0 0 35px #ef4444, 
+                    0 0 60px rgba(239, 68, 68, 0.4),
+                    inset 0 0 25px #b91c1c !important;
     }
 }
