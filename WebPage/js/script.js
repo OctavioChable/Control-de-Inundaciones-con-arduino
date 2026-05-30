@@ -272,10 +272,10 @@ async function exportarReportePDF() {
     const data = await response.json();
     
     if (data) {
-        let yPos = 55;
+        let yPos = 70;
         doc.setFont("helvetica", "bold");
-        doc.text("Hora de Lectura", 25, 50);
-        doc.text("Nivel Detectado (cm)", 80, 50);
+        doc.text("Hora de Lectura", 25, 65);
+        doc.text("Nivel Detectado (cm)", 80, 65);
         doc.setFont("helvetica", "normal");
 
         Object.keys(data).forEach((key, index) => {
