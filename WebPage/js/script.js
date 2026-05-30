@@ -49,6 +49,22 @@ const floodChart = new Chart(ctx, {
     }
 });
 
+// CONTROL DEL MODAL INFORMATIVO DE INICIO
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("modalInicio");
+    const btnEntendido = document.getElementById("btnEntendido");
+
+    if (modal && btnEntendido) {
+        // Al dar clic en el botón, el modal se oculta suavemente
+        btnEntendido.addEventListener("click", () => {
+            modal.style.opacity = "0";
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 400); // Espera a que termine la transición de opacidad
+        });
+    }
+});
+
 function reproducirAlarma(){
     sonidoAlert.loop = true;
     sonidoAlert.play()
