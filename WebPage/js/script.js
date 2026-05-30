@@ -36,7 +36,7 @@ const floodChart = new Chart(ctx, {
             x: {
                 title: {
                 display: true,
-                text: 'Tiempo (hh:mm:ss)'
+                text: 'Fecha y hora'
                 }
             },
             y: {
@@ -330,9 +330,25 @@ async function exportarReportePDF() {
 
         Object.keys(data).forEach((key, index) => {
             const lectura = data[key];
-            const hora = new Date(lectura.timestamp).toLocaleTimeString();
+
+            const fecha = new Date(lectura.timestamp);
+                
+                // 1. Extraemos los componentes de la fecha completa
+            const dia = String(fecha.getDate()).padStart(2, '0');
+                
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
+            const anio = fecha.getFullYear();
+                
+                // 2. Extraemos los componentes de la hora 
+            const horas = String(fecha.getHours()).padStart(2, '0');
+            const minutos = String(fecha.getMinutes()).padStart(2, '0');
+            const segundos = String(fecha.getSeconds()).padStart(2, '0');
+                
+                // 3. Unimos todo en una sola cadena de texto (Fecha + Hora)
+            const fechaCompleta = `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
+
             let nivelAguaExpo = suelocm - lectura.valor;
-            doc.text(hora, 35, yPos);
+            doc.text(fechaCompleta, 35, yPos);
             doc.text(`${nivelAguaExpo} cm`, 90, yPos);
             
             yPos += 8; // Espaciado entre filas
