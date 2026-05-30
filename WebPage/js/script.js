@@ -90,7 +90,7 @@ function pararBordeAlerta(Elemento){
 function activarAlerta(){
     reproducirAlarma();
 // CUANDO SE ACTIVA LA ALERTA (Cambia a tonos rojizos)
-    document.body.style.background = "linear-gradient(135deg, #f87171 0%, #f04a4a 100%)";
+    document.body.style.background = "linear-gradient(135deg, #f08383 0%, #ea8b8b 100%)";
 
     const Cont1 = document.getElementById("contenedor1");
     const Cont2 = document.getElementById("contenedor2");

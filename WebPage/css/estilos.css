@@ -38,6 +38,9 @@
 
         
         .logo-container img {
+            background: transparent !important; 
+            border: none !important; 
+            box-shadow: none !important;
             height: auto;
             max-width: 120px; 
             display: block;
