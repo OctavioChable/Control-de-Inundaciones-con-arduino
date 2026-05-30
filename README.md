@@ -11,7 +11,7 @@ Arduino-server/
 │   ├── index.html
 │   ├── css/estilos.css
 │   └── js/script.js
-├── keys/                  # ⚠️ NO subir al repo (en .gitignore)
+├── keys/                  
 │   └── iotKey.json        # Credenciales Firebase (agregar manualmente)
 ├── Dockerfile
 ├── docker-compose.yml
@@ -59,7 +59,3 @@ node Esp32Arduino.js
 | GET    | /api/dashboard  | Últimos 10 registros del historial   |
 | GET    | /api/reporte    | Últimos 30 registros (para PDF)      |
 
-## ⚠️ Seguridad
-
-- **Nunca** subas `.env` ni `keys/iotKey.json` a Git
-- El `.gitignore` ya los excluye, pero verifica antes de hacer `git push`

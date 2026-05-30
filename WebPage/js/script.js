@@ -65,6 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
+function estaSonandoAlarma() {
+    return sonidoAlert && !sonidoAlert.paused && sonidoAlert.currentTime > 0 && !sonidoAlert.ended;
+}
+
 function reproducirAlarma(){
     sonidoAlert.loop = true;
     sonidoAlert.play()
@@ -84,6 +89,9 @@ function pararBordeAlerta(Elemento){
 
 function activarAlerta(){
     reproducirAlarma();
+// CUANDO SE ACTIVA LA ALERTA (Cambia a tonos rojizos)
+    document.body.style.background = "linear-gradient(135deg, #f87171 0%, #f04a4a 100%)";
+
     const Cont1 = document.getElementById("contenedor1");
     const Cont2 = document.getElementById("contenedor2");
     const Cont3 = document.getElementById("contenedor3");
@@ -99,6 +107,10 @@ function activarAlerta(){
 
 function pararAlerta(){
     pararAlarma();
+
+
+    //CUANDO SE DETIENE LA ALERTA (Vuelve a tu estado original exacto)
+    document.body.style.background = "linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%)";
     const Cont1 = document.getElementById("contenedor1");
     const Cont2 = document.getElementById("contenedor2");
     const Cont3 = document.getElementById("contenedor3");
@@ -247,15 +259,22 @@ function actualizarUI(realValue) {
         if (DangerLevel < 45){
             dangerBar.style.background = "linear-gradient(to top, #14e29d, #1fbf84)";
             mensajes = "El nivel del agua es bajo, no requiere acciones.";
-            pararAlerta();
+            if(estaSonandoAlarma()){
+                pararAlerta();
+            }
         } else if (DangerLevel < 80) {
             dangerBar.style.background = "linear-gradient(to top, #facb53, #fcaa4d)";
             mensajes = "El nivel del agua está subiendo, manténgase atento.";
-            pararAlerta();
+            if(estaSonandoAlarma()){
+                pararAlerta();
+            }
         } else {
             dangerBar.style.background = "linear-gradient(to top, #e65858, #c91c1c)";
             mensajes = "El nivel del agua es peligroso, evacue de inmediato.";
-            activarAlerta();
+            if(!estaSonandoAlarma()){
+                activarAlerta();
+            }
+            
         }
 
         const mensajesP = document.getElementById('mensajesText');
